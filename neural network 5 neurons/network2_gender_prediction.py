@@ -58,4 +58,4 @@ class NeuralNet:
                 y_pred = o1
 
                 # Derivatives calculation
-
+                # 1 2 3

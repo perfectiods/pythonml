@@ -43,7 +43,7 @@ class NeuralNet:
     def train(self, data, all_y_trues):
         # n - number of samples in dataset, all_y_trues - np array with n elements
         learn_rate = 0.1
-        epochs = 1000 # number of cycles in dataset
+        epochs = 1000 # number of cycles to loop throw dataset
 
         for epoch in range(epochs):
             for x, y_true in zip(data, all_y_trues):
@@ -73,7 +73,7 @@ class NeuralNet:
                 3. Use renovation equation for every weight or bias.
                 4. Return to first point.
                 """
-                # Derivatives calculation
+                # Partial derivatives calculation
                 d_L_d_y_pred = - 2 * (y_true - y_pred)
 
                 # Neuron o1
@@ -94,23 +94,23 @@ class NeuralNet:
                 d_h2_d_w4 = x[1] * deriv_sigmoid(sum_h2)
                 d_h2_d_b2 = deriv_sigmoid(h2)
 
-                # Renew weight and biases
+                # Update weight and biases
                 # Neuron h1
-                self.w1 -= learn_rate * d_L_d_y_pred * d_y_pred_d_h1 * d_h1_d...
-                self.w2 -= learn_rate * d_L_d_y_pred * d_y_pred_d_h1 * d_h1_d...
-                self.b1 -= learn_rate * d_L_d_y_pred * d_y_pred_d_h1 * d_h1_d...
+                self.w1 -= learn_rate * d_L_d_y_pred * d_y_pred_d_h1 * d_h1_d_w1
+                self.w2 -= learn_rate * d_L_d_y_pred * d_y_pred_d_h1 * d_h1_d_w2
+                self.b1 -= learn_rate * d_L_d_y_pred * d_y_pred_d_h1 * d_h1_d_b1
 
                 # Neuron h2
-                self.w1 -= learn_rate * d_L_d_y_pred * d_y_pred_d_h1 * d_h1_d...
-                self.w2 -= learn_rate * d_L_d_y_pred * d_y_pred_d_h1 * d_h1_d...
-                self.b1 -= learn_rate * d_L_d_y_pred * d_y_pred_d_h1 * d_h1_d...
+                self.w3 -= learn_rate * d_L_d_y_pred * d_y_pred_d_h2 * d_h2_d_w3
+                self.w4 -= learn_rate * d_L_d_y_pred * d_y_pred_d_h2 * d_h2_d_w4
+                self.b2 -= learn_rate * d_L_d_y_pred * d_y_pred_d_h2 * d_h2_d_b2
 
                 # Neuron o1
-                self.w3 -= learn_rate * d_L_d_y_pred * d_y_pred_d_h2 * d_h2_d...
-                self.w4 -= learn_rate * d_L_d_y_pred * d_y_pred_d_h2 * d_h2_d...
-                self.b2 -= learn_rate * d_L_d_y_pred * d_y_pred_d_h2 * d_h2_d...
+                self.w5 -= learn_rate * d_L_d_y_pred * d_y_pred_d_w5
+                self.w6 -= learn_rate * d_L_d_y_pred * d_y_pred_d_w6
+                self.b3 -= learn_rate * d_L_d_y_pred * d_y_pred_d_b3
 
-                # Calculate common loss in the end of every phase
+                # Calculate total loss in the end of every phase
                 if epoch % 10 == 0:
                     y_preds = np.apply_along_axis(self.feedforward, 1, data)
                     loss = mse_loss(all_y_trues, y_preds)
@@ -136,3 +136,8 @@ all_y_trues = np.array([
 network = NeuralNet()
 network.train(data, all_y_trues)
 
+# Make predictions
+emily = np.array([-7, -3]) # 128 pounds, 63 inches
+frank = np.array([20, 2])  # 155 pounds, 68 inches
+print("Emily: %.3f" % network.feedforward(emily)) # 0.951 - F
+print("Frank: %.3f" % network.feedforward(frank)) # 0.039 - M

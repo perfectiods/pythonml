@@ -1,5 +1,6 @@
 import numpy as np
 # via https://python-scripts.com/intro-to-neural-networks
+# source https://victorzhou.com/blog/intro-to-neural-networks/
 
 # #
 # Let we have 1 neuron with 2 entries and 1 exit.

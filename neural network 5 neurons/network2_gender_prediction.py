@@ -1,4 +1,6 @@
 import numpy as np
+# via https://python-scripts.com/intro-to-neural-networks
+# source https://victorzhou.com/blog/intro-to-neural-networks/
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))

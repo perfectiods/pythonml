@@ -55,7 +55,7 @@ class NeuralNet:
                 sum_h2 = self.w3 * x[0] + self.w4 * x[1] + self.b2
                 h2 = sigmoid(sum_h2)
 
-                sum_o1 = self.w5 * x[0] + self.w6 * x[1] + self.b3
+                sum_o1 = self.w5 * h1 + self.w6 * h2 + self.b3
                 o1 = sigmoid(sum_o1)
                 y_pred = o1
 
@@ -141,5 +141,5 @@ network.train(data, all_y_trues)
 # Make predictions
 emily = np.array([-7, -3]) # 128 pounds, 63 inches
 frank = np.array([20, 2])  # 155 pounds, 68 inches
-print("Emily: %.3f" % network.feedforward(emily)) # 0.951 - F
-print("Frank: %.3f" % network.feedforward(frank)) # 0.039 - M
+print("Emily: %.3f" % network.feedforward(emily)) # 0.947 - F
+print("Frank: %.3f" % network.feedforward(frank)) # 0.040 - M

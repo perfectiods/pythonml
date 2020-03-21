@@ -1,6 +1,8 @@
-# via https://victorzhou.com/blog/keras-neural-network-tutorial/
-# Classic ML problem: MNIST handwritten digit classification. Given an image, classify it as digit.
-# Solved by using Keras.
+"""
+via https://victorzhou.com/blog/keras-neural-network-tutorial/
+Classic ML problem: MNIST handwritten digit classification. Given an image, classify it as digit.
+Solved by using Keras library on TensorFlow backend.
+"""
 
 """
 Note: every run of this script builds and trains model. We don't need to do it every time.
@@ -43,6 +45,7 @@ test_images = test_images.reshape((-1, 784))
 print(train_images.shape) #(60000,784)
 print(train_labels.shape) #(10000,784)
 
+
 # 2. Build the model
 # 2.1 Every Keras model is built using Sequential class which represents a linear stack of layers
 model = Sequential([
@@ -70,6 +73,8 @@ model.fit(
     batch_size=32, #number of samples per gradient update
 )
 # May run on this point. After 5 epochs: 11s 188us/step - loss: 0.1077 - accuracy: 0.9662
+# Training a model in Keras literally consists only of calling fit() and specifying some parameters.
+
 
 # 3. Test the model
 # Evaluate the model
@@ -78,7 +83,8 @@ model.evaluate(
     to_categorical(test_labels),
 )
 # Gives 0s 15us/step [0.10821614159140736, 0.965] - that means that evaluate() method returned loss array
-# so that means that our model has 0,108 loss and 96,5 % accuracy
+# Loss: 0.108, accuracy: 96.5%.
+
 
 # 4. Use the model
 # Save model to disk

@@ -41,8 +41,8 @@ train_images = np.expand_dims(train_images, axis=3)
 test_images = np.expand_dims(test_images, axis=3)
 
 num_filters = 8
-filter_size = 3
-pool_size = 2
+filter_size = 3 #filter is matrix 3x3
+pool_size = 2 #traverse the input image in 2x2 blocks
 
 
 """
@@ -108,7 +108,7 @@ Use this to make predictions with trained model
 
 model = Sequential([
     Conv2D(num_filters, filter_size, input_shape=(28, 28, 1)), #input layer
-    MaxPooling2D(pool_size=pool_size),
+    MaxPooling2D(pool_size=pool_size), #pooling - decrease redundance. We take only max value from 4 neighbor pixels
     Flatten(),
     Dense(10, activation='softmax'), #output softmax layer has 10 nodes
 ])

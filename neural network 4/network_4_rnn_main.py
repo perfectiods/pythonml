@@ -39,24 +39,21 @@ def createInputs(text):
         inputs.append(v)
     return inputs
 
- def softmax(xs):
-    # Apply softmax function to input array
+def softmax(xs):
+    # Apply Softmax Function to input array
     return np.exp(xs) / sum(np.exp(xs))
+
 
 # Initialize RNN
 rnn = RNN(vocab_size, 2)
 
-
-
 """
-inputs = createInputs('I am very good')
+To test RNN working try to forward pass and count probabilities
+"""
+inputs = createInputs('i am very good')
 out, h = rnn.forward(inputs)
 probs = softmax(out)
 print(probs)
-
-"""
-
-
 
 
 # FORWARD PHASE

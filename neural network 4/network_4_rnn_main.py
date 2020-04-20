@@ -50,11 +50,26 @@ rnn = RNN(vocab_size, 2)
 """
 To test RNN working try to forward pass and count probabilities
 """
+"""
 inputs = createInputs('i am very good')
 out, h = rnn.forward(inputs)
 probs = softmax(out)
 print(probs)
+"""
 
+# Loop over each training example
+for x, y in train_data.items():
+    inputs = createInputs(x)
+    target = int(y)
 
-# FORWARD PHASE
-# Initialize 3 weights and 2 biases
+    # Forward
+    out, _ = rnn.forward(inputs)
+    probs = softmax(out)
+
+    # Build dL/dy
+    d_L_d_y = probs
+    d_L_d_y[target] -= 1 #Отнимает значение правого операнда от левого и присваивает результат левому операнду.
+
+    # Backward
+    rnn.backprop(d_L_d_y)
+

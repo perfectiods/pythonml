@@ -57,19 +57,48 @@ probs = softmax(out)
 print(probs)
 """
 
-# Loop over each training example
-for x, y in train_data.items():
-    inputs = createInputs(x)
-    target = int(y)
+def processData(data, backprop=True):
+    """
+    Return RNN's loss and accuracy for given data
+    - data is a dictionary which marrks if text true or false
+    - backprop indicates if backpropagation is need
+    """
+    # Loop over each training example
+    for x, y in data.items():
+        inputs = createInputs(x)
+        target = int(y)
+
+    loss = 0
+    num_correct = 0
 
     # Forward
     out, _ = rnn.forward(inputs)
     probs = softmax(out)
 
-    # Build dL/dy
-    d_L_d_y = probs
-    d_L_d_y[target] -= 1 #Отнимает значение правого операнда от левого и присваивает результат левому операнду.
+    # Calculate loss/accuracy
+    loss -= np.log(probs[target])
+    num_correct += int(np.argmax(probs) == target)
 
-    # Backward
-    rnn.backprop(d_L_d_y)
+    if backprop
+        # Build dL/dy
+        d_L_d_y = probs
+        d_L_d_y[target] -= 1 #Отнимает значение правого операнда от левого и присваивает результат левому операнду.
+
+        # Backward
+        rnn.backprop(d_L_d_y)
+
+    return loss / len(data), num_correct / len(data)
+
+# Training loop
+
+for epoch in range(1000):
+    train_loss, train_acc = processData(train_data)
+
+    if epoch % 100 == 99:
+        print('--- Epoch %d' % (epoch + 1))
+        print('Train:\tLoss %.3f | Accuracy: %.3f' % (train_loss, train_acc))
+
+        test_loss, test_acc = processData(test_data, backprop=False)
+        print('Test:\tLoss %.3f | Accuracy: %.3f' % (test_loss, test_acc))
+
 

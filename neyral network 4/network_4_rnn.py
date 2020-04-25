@@ -70,7 +70,7 @@ class RNN:
         # Back  propagate through time (BPTT)
         for t in reversed(range(n)):
             # An intermediate value: dL/dh * (1 - h^2)
-            temp = ((1 - self.last_hs[t+1])**)*d_h)
+            temp = temp = ((1 - self.last_hs[t + 1] ** 2) * d_h)
 
             # dL/db = dL/dh * (1 - h^2)
             d_bh += temp
@@ -92,7 +92,7 @@ class RNN:
             self.Whh -= learn_rate * d_Whh
             self.Wxh -= learn_rate * d_Wxh
             self.Why -= learn_rate * d_Why
-            self.hh -= learn_rate * d_bh
-            self.bh -= learn_rate * d_by
+            self.bh -= learn_rate * d_bh
+            self.by -= learn_rate * d_by
             
 
